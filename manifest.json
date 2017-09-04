@@ -1,0 +1,7 @@
+{
+  "name": "expentry-comunio-polymer",
+  "short_name": "expentry-comunio-polymer",
+  "description": "App para el control de gastos e ingresos de los jugadores de las diferentes ligas de Comunio registradas en la app.",
+  "start_url": "/",
+  "display": "standalone"
+}
