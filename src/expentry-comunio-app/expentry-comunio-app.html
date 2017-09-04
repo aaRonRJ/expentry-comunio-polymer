@@ -1,4 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-app.html">
+<link rel="import" href="./pages/main-layout.html">
 
 <dom-module id="expentry-comunio-app">
   <template>
@@ -7,7 +9,15 @@
         display: block;
       }
     </style>
-    <h2>Hello [[prop1]]!</h2>
+    
+    <firebase-app auth-domain="expentry-comunio.firebaseapp.com"
+    database-url="https://expentry-comunio.firebaseio.com"
+    api-key="AIzaSyCNOH6gUBVEqZPn2q4wiv7lzEG2QrdtA3A"
+    storage-bucket="expentry-comunio.appspot.com"
+    messaging-sender-id="874644608088">
+    </firebase-app>
+
+    <main-layout></main-layout>
   </template>
 
   <script>
@@ -17,11 +27,14 @@
      */
     class ExpentryComunioApp extends Polymer.Element {
       static get is() { return 'expentry-comunio-app'; }
+      
       static get properties() {
         return {
-          prop1: {
-            type: String,
-            value: 'expentry-comunio-app'
+          user: {
+            type: Object
+          },
+          userSession: {
+            type: Object
           }
         };
       }

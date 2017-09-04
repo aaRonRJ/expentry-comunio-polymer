@@ -1,0 +1,62 @@
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="../../../bower_components/paper-styles/color.html">
+<link rel="import" href="../../../bower_components/polymerfire/firebase-auth.html">
+<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../../bower_components/iron-icon/iron-icon.html">
+
+<dom-module id="app-login">
+    <template>
+            <style>
+                .root-login {
+                    margin: 0 1em;
+                    text-align: center;
+                }
+
+                .text-login {
+                    color: #888;
+                }
+
+                .button-login {
+                    border: #666;
+                    border-radius: 5px;
+                    padding: 0.5em 1em;
+                    background-color: #aaa;
+                    color: #eaeaea;
+                }
+            </style>
+            
+            <div class="root-login">
+                <p class="text-login">
+                    Necesitamos que inicies sesión con tu cuenta de Google.
+                </p>
+                <paper-button toggles raised>
+                    <iron-icon icon="favorite"></iron-icon> Acceder
+                </paper-button>
+                </div>
+            <!-- <firebase-auth id="authElement" user="{{user}}" provider="google" status-known="{{statusKnown}}">
+            </firebase-auth>
+            <paper-button class="signInButton" raised on-tap="signin" hidden$="[[user]]"><img src="images/google.svg">Sign In
+            </paper-button>
+            <paper-button id="signout" raised on-tap="signout" hidden$="[[!user]]">Sign Out</paper-button> -->
+    </template>
+
+    <script>
+        class AppLogin extends Polymer.Element {
+            static get is() {
+                return "app-login";
+            }
+
+            static get properties() {
+                return {
+                    user: {
+                        type: Object,
+                        value: null
+                    }
+                };
+            }
+        }
+
+        customElements.define(AppLogin.is, AppLogin);
+    </script>
+</dom-module>

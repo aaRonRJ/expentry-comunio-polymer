@@ -1,0 +1,29 @@
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="app-header.html">
+<link rel="import" href="app-login.html">
+
+<dom-module id="main-layout">    
+    <template>
+       <app-header user="{{user}}"></app-header>
+       <app-login hidden$="{{user}}" user="{{user}}"></app-login>
+    </template>
+    
+    <script>
+        class MainLayout extends Polymer.Element {
+            static get is() {
+                return "main-layout";
+            }
+
+            static get properties() {
+                return {
+                    user: {
+                        type: Object,
+                        value: null
+                    }
+                };
+            }
+        }
+
+        customElements.define(MainLayout.is, MainLayout);
+    </script>
+</dom-module>
