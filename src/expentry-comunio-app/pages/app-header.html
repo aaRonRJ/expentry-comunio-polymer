@@ -22,7 +22,7 @@
 
         <div class="container">
             <h1 class="title">Expentry comunio</h1>
-            <paper-button class="custom" hidden$="{{!user}}">
+            <paper-button class="custom" hidden$="{{!user}}" on-tap="logout">
                 <iron-icon icon="exit-to-app"></iron-icon>
             </paper-button>
         </div>
@@ -36,9 +36,17 @@
                 return {
                     user: {
                         type: Object,
-                        value: null
+                        notify: true
+                    },
+                    authElement: {
+                        type: Object,
+                        notify: true                
                     }
                 }
+            }
+
+            logout() {
+                this.authElement.signOut();
             }
         }
 

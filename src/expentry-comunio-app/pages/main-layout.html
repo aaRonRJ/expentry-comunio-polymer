@@ -2,10 +2,14 @@
 <link rel="import" href="app-header.html">
 <link rel="import" href="app-login.html">
 
-<dom-module id="main-layout">    
-    <template>
-       <app-header user="{{user}}"></app-header>
-       <app-login hidden$="{{user}}" user="{{user}}"></app-login>
+<dom-module id="main-layout">
+    <template>        
+       <app-header user="{{user}}" auth-element="{{authElement}}"></app-header>
+       <app-login hidden$="{{user}}" user="{{user}}" auth-element="{{authElement}}"></app-login>
+
+       <template is="dom-if" if="{{user}}">
+           <h1>Hola, {{user.displayName}}</h1>
+       </template>
     </template>
     
     <script>
@@ -18,8 +22,12 @@
                 return {
                     user: {
                         type: Object,
-                        value: null
-                    }
+                        notify: true
+                    },
+                    authElement: {
+                        type: Object,
+                        notify: true                  
+                    }                    
                 };
             }
         }

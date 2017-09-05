@@ -25,20 +25,19 @@
                     color: #eaeaea;
                 }
             </style>
-            
+
             <div class="root-login">
                 <p class="text-login">
                     Necesitamos que inicies sesión con tu cuenta de Google.
                 </p>
-                <paper-button toggles raised>
-                    <iron-icon icon="favorite"></iron-icon> Acceder
+
+                <firebase-auth id="auth" user="{{user}}" provider="google" status-known="{{statusKnown}}">
+                </firebase-auth>
+
+                <paper-button toggles raised on-tap="login">
+                    <iron-icon icon="account-circle"></iron-icon> Acceder
                 </paper-button>
                 </div>
-            <!-- <firebase-auth id="authElement" user="{{user}}" provider="google" status-known="{{statusKnown}}">
-            </firebase-auth>
-            <paper-button class="signInButton" raised on-tap="signin" hidden$="[[user]]"><img src="images/google.svg">Sign In
-            </paper-button>
-            <paper-button id="signout" raised on-tap="signout" hidden$="[[!user]]">Sign Out</paper-button> -->
     </template>
 
     <script>
@@ -51,9 +50,27 @@
                 return {
                     user: {
                         type: Object,
-                        value: null
+                        notify: true
+                    },
+                    statusKnown: {
+                        type: Object
+                    },
+                    authElement: {
+                        type: Object,
+                        notify: true
                     }
                 };
+            }            
+
+            login() {
+                // Abrimos el popUp de login de Google.
+                return this.$.auth.signInWithPopup();
+            }
+
+            connectedCallback() {
+                super.connectedCallback();
+
+                this.authElement = this.$.auth;
             }
         }
 
