@@ -1,6 +1,7 @@
 <link rel="import" href="../../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="app-header.html">
 <link rel="import" href="app-login.html">
+<link rel="import" href="../components/league-list.html">
 
 <dom-module id="main-layout">
     <template>        
@@ -8,7 +9,7 @@
        <app-login hidden$="{{user}}" user="{{user}}" auth-element="{{authElement}}"></app-login>
 
        <template is="dom-if" if="{{user}}">
-           <h1>Hola, {{user.displayName}}</h1>
+           <league-list></league-list>
        </template>
     </template>
     
@@ -26,8 +27,8 @@
                     },
                     authElement: {
                         type: Object,
-                        notify: true                  
-                    }                    
+                        notify: true
+                    }
                 };
             }
         }

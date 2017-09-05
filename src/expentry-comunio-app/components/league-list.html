@@ -1,0 +1,140 @@
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../bower_components/polymerfire/firebase-auth.html">
+<link rel="import" href="../../../bower_components/polymerfire/firebase-query.html">
+<link rel="import" href="../../../bower_components/iron-icon/iron-icon.html">
+
+<dom-module id="league-list">
+    <template>
+        <firebase-auth user="{{user}}"></firebase-auth>
+        <firebase-query id="query"
+        path="/users/[[user.uid]]/leagues"
+        data="{{leagues}}"></firebase-query>
+        
+        <!-- Styles css component -->
+        <style>
+            .container-league {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .header-league-list {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+            }
+
+            .button-add-league {
+                cursor: pointer;
+                margin-top: 1em;
+            }
+
+            .content-league-list {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .separate-line {
+                width: 100%;
+                height: 0.1em;
+                background-color: #000000;
+            }
+
+            .container-form-add-league {}
+
+            .form-add-league {
+                display: flex;
+                flex-direction: column;
+                margin-top: 0.5em;
+            }
+
+            .form-add-league-text {
+                border-radius: 5px;
+                border: 1px solid #ddd;
+                padding: 0.75em;
+                margin: 1em 0.5em;
+            }
+
+            .form-add-league-buttons {
+                display: flex;
+                justify-content: flex-end;
+            }
+
+            .form-add-league-buttons > button {
+                border-radius: 5px;
+                padding: 0.5em 0.75em;
+                margin: 0.25em;
+            }
+
+            .form-add-league-close {
+                background-color: #fff;
+                border: 1px solid #ddd;
+            }
+
+            .form-add-league-send {
+                background-color: #01DF74;
+                border: 1px solid #01DF74;
+            }
+        </style>
+
+        <div class="container-league" $hidden="{{formAddLeague}}">
+            <div class="header-league-list">
+                <div>&nbsp;</div>
+                <h3>Ligas</h3>
+                <div class="button-add-league">
+                    <iron-icon icon="add"></iron-icon>
+                </div>
+            </div>
+            <div class="separate-line">&nbsp;</div>
+            <div class="content-league-list">
+                    <template is="dom-repeat" items="[[leagues]]" as="league">
+                        <!-- TODO: añadiremos el componente de liga y le pasaremos los atributos necesarios. -->
+                    </template>
+                    
+                    <template is="dom-if" if="[[!_checkExistsLeagues( leagues )]]">
+                        <h3 style="text-align: center;">No hay ligas :'(</h3>
+                    </template>                    
+            </div>
+        </div>
+
+        <div class="container-form-add-league" $hidden="{{!formAddLeague}}">
+                <form class="form-add-league" method="post" on-submit="">
+                    <div>
+                        <span>Nombre: </span>
+                        <input type="text" name="name" class="form-add-league-text" />
+                    </div>
+                    <div class="form-add-league-buttons">
+                        <button type="button" class="form-add-league-close" on-tap="">
+                            <iron-icon icon="close"></iron-icon>
+                        </button>
+                        <button class="form-add-league-send" type="submit">
+                            <iron-icon icon="send"></iron-icon>
+                        </button>
+                    </div>
+                </form>
+        </div>
+    </template>
+    <script>
+        class LeagueList extends Polymer.Element {
+            static get is() { return "league-list"; }
+
+            static get properties() {
+                return {
+                    leagues: {
+                        type: Object,
+                        value: function() { return {}; }
+                    },
+                    formAddLeague: {
+                        type: boolean,
+                        value: false
+                    }
+                };
+            }
+
+            _checkExistsLeagues( leagues ) {
+                return leagues.length > 0 ? true : false; 
+            }
+        }
+
+        customElements.define(LeagueList.is, LeagueList);
+    </script>
+</dom-module>
