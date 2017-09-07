@@ -39,7 +39,9 @@
                 background-color: #000000;
             }
 
-            .container-form-add-league {}
+            .container-form-add-league {
+                display: none;
+            }
 
             .form-add-league {
                 display: flex;
@@ -76,43 +78,44 @@
             }
         </style>
 
-        <div class="container-league" $hidden="{{formAddLeague}}">
+        <div id="containerLeague" class="container-league">
             <div class="header-league-list">
                 <div>&nbsp;</div>
                 <h3>Ligas</h3>
-                <div class="button-add-league">
+                <div class="button-add-league" on-click="_showFormAddLeague">
                     <iron-icon icon="add"></iron-icon>
                 </div>
             </div>
             <div class="separate-line">&nbsp;</div>
             <div class="content-league-list">
-                    <template is="dom-repeat" items="[[leagues]]" as="league">
-                        <!-- TODO: añadiremos el componente de liga y le pasaremos los atributos necesarios. -->
-                    </template>
-                    
-                    <template is="dom-if" if="[[!_checkExistsLeagues( leagues )]]">
-                        <h3 style="text-align: center;">No hay ligas :'(</h3>
-                    </template>                    
+                <template is="dom-repeat" items="[[leagues]]" as="league">
+                    <!-- TODO: añadiremos el componente de liga y le pasaremos los atributos necesarios. -->
+                </template>
+                
+                <template is="dom-if" if="[[!_checkExistsLeagues( leagues )]]">
+                    <h3 style="text-align: center;">No hay ligas :'(</h3>
+                </template>                    
             </div>
         </div>
-
-        <div class="container-form-add-league" $hidden="{{!formAddLeague}}">
-                <form class="form-add-league" method="post" on-submit="">
-                    <div>
-                        <span>Nombre: </span>
-                        <input type="text" name="name" class="form-add-league-text" />
-                    </div>
-                    <div class="form-add-league-buttons">
-                        <button type="button" class="form-add-league-close" on-tap="">
-                            <iron-icon icon="close"></iron-icon>
-                        </button>
-                        <button class="form-add-league-send" type="submit">
-                            <iron-icon icon="send"></iron-icon>
-                        </button>
-                    </div>
-                </form>
+        
+        <div id="containerFormAddLeague" class="container-form-add-league">
+            <form class="form-add-league" method="post" on-submit="">
+                <div>
+                    <span>Nombre: </span>
+                    <input type="text" name="name" class="form-add-league-text" />
+                </div>
+                <div class="form-add-league-buttons">
+                    <button type="button" class="form-add-league-close" on-click="_closeFormAddLeague">
+                        <iron-icon icon="close"></iron-icon>
+                    </button>
+                    <button class="form-add-league-send" type="submit">
+                        <iron-icon icon="send"></iron-icon>
+                    </button>
+                </div>
+            </form>
         </div>
     </template>
+
     <script>
         class LeagueList extends Polymer.Element {
             static get is() { return "league-list"; }
@@ -122,16 +125,22 @@
                     leagues: {
                         type: Object,
                         value: function() { return {}; }
-                    },
-                    formAddLeague: {
-                        type: boolean,
-                        value: false
                     }
                 };
             }
 
             _checkExistsLeagues( leagues ) {
                 return leagues.length > 0 ? true : false; 
+            }
+
+            _showFormAddLeague() {
+                this.$.containerLeague.style.display = "none";
+                this.$.containerFormAddLeague.style.display = "block";
+            }
+
+            _closeFormAddLeague() {
+                this.$.containerLeague.style.display = "flex";
+                this.$.containerFormAddLeague.style.display = "none";
             }
         }
 
